@@ -39,4 +39,16 @@ if (require.main === module) {
   })
 }
 
+//get stocklist
+app.get('/api/stocklist', (req, res) => {
+  const filePath = path.join(__dirname, '../stocklist.json')
+
+  if (!fs.existsSync(filePath))
+    return res.status(404).json({ error: 'stocklist.json not found' })
+
+  const json = fs.readFileSync(filePath)
+  res.setHeader('Content-Type', 'application/json')
+  res.send(json)
+})
+
 module.exports = app
